@@ -5,3 +5,8 @@ node_modules/
 *.log
 *.env
 .DS_Store
+
+# Ignorar sessão do WhatsApp
+.wwebjs_auth/
+.session/
+session.json
