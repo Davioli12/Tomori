@@ -1,61 +1,49 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const fs = require('fs');
 
-// Configurações do bot
-const prefix = '/'; // Prefixo personalizado
+// Carrega configurações
+const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+const prefix = config.prefix;
 
-const menuInfo = {
-    nome: "Bot do João",
-    versao: "v1.0.0",
-    dono: "João Silva",
-};
-
-// Cria o cliente com sessão salva
 const client = new Client({
-    authStrategy: new LocalAuth({
-        clientId: 'session-bot', // Nome da pasta onde a sessão será salva
-    })
+    authStrategy: new LocalAuth(), // Salva login
+    puppeteer: { headless: true }
 });
 
-// Quando estiver pronto
-client.on('ready', () => {
-    console.log('✅ Bot está pronto e logado!');
-});
-
-// Gera QR code (só na primeira vez)
+// Gera QR code
 client.on('qr', qr => {
-    console.log('📲 Escaneie o QR code abaixo:');
     qrcode.generate(qr, { small: true });
 });
 
-// Evento ao receber mensagens
-client.on('message_create', message => {
+// Quando o bot estiver pronto
+client.on('ready', () => {
+    console.log(`🤖 ${config.bot_name} v${config.version} está online!`);
+});
+
+// Responde todas mensagens (inclusive suas)
+client.on('message_create', async (message) => {
     const msg = message.body.trim();
 
-    if (msg === `${prefix}ping`) {
-        client.sendMessage(message.from, 'pong');
+    // Exibe quem enviou
+    console.log(`[${message.fromMe ? 'EU' : 'OUTRO'}] ${msg}`);
+
+    // Verifica se começa com o prefixo
+    if (!msg.startsWith(prefix)) return;
+
+    const args = msg.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    if (command === 'ping') {
+        await message.reply('!ping');
     }
 
-    if (msg === `${prefix}menu`) {
+    if (command === 'info') {
         const now = new Date();
-        const horario = now.toLocaleTimeString('pt-BR');
-        const data = now.toLocaleDateString('pt-BR');
-
-        const resposta = `📋 *Menu do Bot*
-
-📛 *Nome:* ${menuInfo.nome}
-🧾 *Versão:* ${menuInfo.versao}
-👤 *Dono:* ${menuInfo.dono}
-⏰ *Horário:* ${data} às ${horario}
-
-📌 *Comandos disponíveis:*
-- ${prefix}ping → Teste de conexão
-- ${prefix}menu → Exibe este menu
-        `;
-
-        client.sendMessage(message.from, resposta);
+        await message.reply(
+            `🤖 *${config.bot_name}* v${config.version}\n👤 Dono: ${config.owner}\n⏰ Horário: ${now.toLocaleString()}`
+        );
     }
 });
 
-// Inicializa o bot
 client.initialize();
