@@ -1,0 +1,7 @@
+# Evita enviar dependências
+node_modules/
+
+# Evita logs e temporários
+*.log
+*.env
+.DS_Store
