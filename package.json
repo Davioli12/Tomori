@@ -8,7 +8,7 @@
   "description": "Bot whats",
   "main": "main.js",
   "scripts": {
-    "test": "start"
+    "test": "node main.js"
   },
   "author": "Light",
   "license": "ISC",
