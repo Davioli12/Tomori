@@ -83,4 +83,4 @@ if (command === 'hentai') {
         await message.reply('❌ Erro ao buscar imagem hentai.');
     }
 }
-client.initialize();
+client.initialize()
