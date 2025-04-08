@@ -1,7 +1,6 @@
 {
-    "prefix": "!",
-    "bot_name": "Tomori",
-    "version": "1.0",
-    "owner": "@Davioli12"
-  }
-  
+  "bot_name": "Tomori",
+  "version": "1.0",
+  "owner": "@Davioli12",
+  "prefix": "!"
+}
