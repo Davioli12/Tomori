@@ -10,7 +10,7 @@ const menu = (prefix, NomeDoBot, sender) => {
 ╎⁑ۣۜۜ͜͡🎃${prefix}ping - Ver latência
 ╎⁑ۣۜۜ͜͡🎃${prefix}anime <nome> - Info de anime
 ╎⁑ۣۜۜ͜͡🎃${prefix}sticker - Criar figurinha
-╎⁑ۣۜۜ͜͡🎃${prefix}git <user> - Ver GitHub
+
 ╰╼━═━━≺🎗️≻━━═━╾╯
 
 🔰 *By: ${NomeDoBot}* 🔰
