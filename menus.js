@@ -24,3 +24,25 @@ const menu = (prefix, NomeDoBot, sender) => {
 };
 
 module.exports = { menu };
+
+const menuAdm = (prefix) => {
+  return `🛡 Menu de Administração
+
+📌 Comandos do Dono/Admins:
+${prefix}ban @
+${prefix}desligar
+${prefix}msgall <texto>
+${prefix}promover @
+${prefix}rebaixar @
+${prefix}abrirgrupo
+${prefix}fechargrupo
+${prefix}linkgrupo
+${prefix}limpar
+${prefix}apagar
+${prefix}statusbot
+`;
+};
+
+module.exports = {
+  menuAdm
+};

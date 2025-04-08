@@ -175,6 +175,56 @@ client.on('message_create', async (message) => {
     } else {
         await message.reply(`${result}\n\n😢 Você perdeu! Tente novamente.`);
     }
+    if (['ban', 'promover', 'rebaixar', 'abrirgrupo', 'fechargrupo', 'linkgrupo'].includes(command)) {
+        const chat = await message.getChat();
+        const senderId = message.author || message.from;
+        const isGroup = chat.isGroup;
+    
+        if (!isGroup) return await message.reply("❗ Este comando só funciona em grupos.");
+    
+        const isBotAdmin = chat.participants.find(p => p.id._serialized === client.info.wid._serialized)?.isAdmin;
+        const isUserAdmin = chat.participants.find(p => p.id._serialized === senderId)?.isAdmin;
+    
+        if (!isUserAdmin) return await message.reply("🚫 Apenas administradores do grupo podem usar este comando.");
+        if (!isBotAdmin) return await message.reply("⚠ Eu preciso ser admin para executar isso!");
+    
+        const mentioned = message.mentionedIds[0];
+        if (['ban', 'promover', 'rebaixar'].includes(command) && !mentioned) {
+            return await message.reply("❗ Você precisa mencionar um usuário. Ex: !ban @");
+        }
+    
+        switch (command) {
+            case 'ban':
+                await chat.removeParticipants([mentioned]);
+                await message.reply("✅ Usuário removido com sucesso.");
+                break;
+    
+            case 'promover':
+                await chat.promoteParticipants([mentioned]);
+                await message.reply("⬆ Usuário promovido a administrador.");
+                break;
+    
+            case 'rebaixar':
+                await chat.demoteParticipants([mentioned]);
+                await message.reply("⬇ Usuário rebaixado com sucesso.");
+                break;
+    
+            case 'abrirgrupo':
+                await chat.setMessagesAdminsOnly(false);
+                await message.reply("✅ Grupo aberto para todos falarem.");
+                break;
+    
+            case 'fechargrupo':
+                await chat.setMessagesAdminsOnly(true);
+                await message.reply("🔒 Grupo fechado. Apenas administradores podem falar.");
+                break;
+    
+            case 'linkgrupo':
+                const code = await chat.getInviteCode();
+                await message.reply(`🔗 Link do grupo:\nhttps://chat.whatsapp.com/${code}`);
+                break;
+        }
+    }
 }
 
 });
