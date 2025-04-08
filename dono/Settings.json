@@ -1,5 +1,7 @@
 {
-    "NickDono": "SeuNick",
-    "numerodn": "559999999999",
-    "msg_dono": "Olá! Aqui é o dono do bot."
-}
+    "admins": [
+      "553597194696@c.us",
+      "5535997567963@c.us"
+    ]
+  }
+  

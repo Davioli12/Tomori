@@ -1,10 +1,6 @@
 {
-  "prefix": "!",
-  "bot_name": "TomoriBot",
+  "bot_name": "MeuBot",
   "version": "1.0",
-  "owner": "SeuNome",
-  "admins": [
-    "553597567963@c.us",
-    "120363409619544236@g.us"
-  ]
+  "owner": "Seu Nome",
+  "prefixes": ["!", "/", ".", "tomori "]
 }
