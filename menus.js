@@ -40,8 +40,30 @@ ${prefix}apagar
 ${prefix}statusbot
 `;
 };
+const menuAnime = (prefix) => {
+  return `🌸 Menu Anime 🌸
+
+🎌 ${prefix}anime <nome>
+🔎 Busca informações detalhadas de um anime.
+
+🖼 ${prefix}animepic
+🔁 Envia uma imagem aleatória de anime.
+
+📖 ${prefix}quoteanime
+💬 Receba uma frase inspiradora de algum personagem.
+
+📺 ${prefix}waifu
+❤ Receba uma imagem aleatória de uma waifu.
+
+🔞 ${prefix}hentai
+❗ Conteúdo +18 (restrito)
+
+━━━━━━━━━━━━━━━━
+Use: ${prefix}comando <argumento> se necessário.`;
+};
 
 module.exports = {
   menuAdm,
-  menu
+  menu,
+  menuAnime
 };
