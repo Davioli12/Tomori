@@ -65,12 +65,6 @@ if (command === 'sticker' || command === 's') {
 }
 
 if (command === 'hentai') {
-    // Protege para uso pessoal (opcional)
-    const autorizado = ['SEU_NUMERO@c.us']; // Exemplo: ['559999999999@c.us']
-    if (!autorizado.includes(message.from)) {
-        return await message.reply('🚫 Este comando é restrito.');
-    }
-
     try {
         const response = await axios.get('https://nekos.life/api/v2/img/hentai');
         const imageUrl = response.data.url;
@@ -78,6 +72,11 @@ if (command === 'hentai') {
         await client.sendMessage(message.from, imageUrl, {
             caption: '🔞 Aqui está seu hentai 😳',
         });
+    } catch (err) {
+        console.error(err);
+        await message.reply('❌ Erro ao buscar imagem hentai.');
+    }
+}
     } catch (err) {
         console.error(err);
         await message.reply('❌ Erro ao buscar imagem hentai.');
