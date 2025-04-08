@@ -1,7 +1,7 @@
 {
-  "bot_name": "MeuBot",
+  "bot_name": "Tomori",
   "version": "1.0",
-  "owner": "Seu Nome",
+  "owner": "Light",
   "prefixes": ["!", "/", ".", "tomori "],
   "admins": ["553597567963@c.us"]
 }
