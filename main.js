@@ -7,6 +7,7 @@ const { menu, menuAdm } = require('./menus');
 const { isAdmin } = require('./utils');
 const puppeteer = require('puppeteer');
 
+
 const settingsPath = './dono/settings.json';
 const donoConfig = fs.existsSync(settingsPath)
   ? JSON.parse(fs.readFileSync(settingsPath, 'utf-8'))
@@ -36,6 +37,7 @@ client.on('message_create', async (message) => {
   const msg = message.body.trim();
   console.log(`[${message.fromMe ? 'EU' : 'OUTRO'}] ${msg}`);
   console.log('🔍 ID do usuário:', message.from);
+  const userId = message.from;
 
   // Detecta qual prefixo foi usado
   const usedPrefix = prefixes.find(p => msg.startsWith(p));
@@ -113,15 +115,13 @@ client.on('message_create', async (message) => {
     return setTimeout(() => process.exit(0), 1000);
   }
 
-  if (command === 'donomenu') {
-    if (!isAdmin(message.from)) {
-      return await message.reply('🚫 Acesso negado.');
+  if (message.body === '!donomenu') {
+    if (isAdmin(userId)) {
+        await message.reply("✅ Você é admin! Aqui está o menu de administração...");
+    } else {
+        await message.reply("❌ Você não tem permissão para isso.");
     }
-
-    const donoMenu = menuAdm(usedPrefix, config.bot_name, message.from);
-    return await message.reply(donoMenu);
-
-  }
+}s
 
   if (command === 'crash') {
     return await message.reply('!crash');
