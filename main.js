@@ -3,7 +3,7 @@ const qrcode = require('qrcode-terminal');
 const fs = require('fs');
 const mime = require('mime-types');
 const axios = require('axios');
-const { menu } = require('./menus');
+const { menu, menuAdm } = require('./menus');
 const { isAdmin } = require('./utils');
 
 const settingsPath = './dono/settings.json';
