@@ -115,7 +115,7 @@ client.on('message_create', async (message) => {
     return setTimeout(() => process.exit(0), 1000);
   }
   const userId = message.from;
-  if (message.body === 'donomenu') {
+  if (command === 'donomenu') {
     if (isAdmin(userId)) {
         await message.reply("✅ Você é admin! Aqui está o menu de administração...");
     } else {
