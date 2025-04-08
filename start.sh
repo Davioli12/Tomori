@@ -1,17 +1,22 @@
 #!/bin/bash
+
 GREEN='\033[0;32m'
-while : 
-do
-echo -e "${GREEN} Tomori - Auto reconexão ativada para prevenção de quedas.."
+NC='\033[0m' # Reset color
 
-if [ "$1" = "sim" ]; then
-node iniciar.js sim
-elif [ "$1" = "não" ]; then
-node iniciar.js não
-else 
-node iniciar.js
-fi
+while true; do
+  echo -e "${GREEN}Tomori - Auto reconexão ativada para prevenção de quedas...${NC}"
 
-sleep 1
+  case "$1" in
+    sim)
+      node iniciar.js sim
+      ;;
+    não | nao)
+      node iniciar.js não
+      ;;
+    *)
+      node iniciar.js
+      ;;
+  esac
+
+  sleep 1
 done
-
