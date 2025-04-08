@@ -8,13 +8,13 @@ while true; do
 
   case "$1" in
     sim)
-      node iniciar.js sim
+      node main.js sim
       ;;
     não | nao)
-      node iniciar.js não
+      node main.js não
       ;;
     *)
-      node iniciar.js
+      node main.js
       ;;
   esac
 
