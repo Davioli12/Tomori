@@ -5,6 +5,7 @@ const mime = require('mime-types');
 const axios = require('axios');
 const { menu, menuAdm } = require('./menus');
 const { isAdmin } = require('./utils');
+const puppeteer = require('puppeteer');
 
 const settingsPath = './dono/settings.json';
 const donoConfig = fs.existsSync(settingsPath)
@@ -15,9 +16,13 @@ const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
 const prefixes = Array.isArray(config.prefixes) ? config.prefixes : [config.prefix]; // Suporta múltiplos prefixos
 
 const client = new Client({
-  authStrategy: new LocalAuth(),
-  puppeteer: { headless: true }
-});
+    authStrategy: new LocalAuth(),
+    puppeteer: {
+      headless: true,
+      executablePath: puppeteer.executablePath(), // usa Chromium incluído
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
+  });
 
 client.on('qr', qr => {
   qrcode.generate(qr, { small: true });
@@ -113,15 +118,9 @@ client.on('message_create', async (message) => {
       return await message.reply('🚫 Acesso negado.');
     }
 
-    const adminMenu =
-      `🔧 *Menu do Dono/Admin*\n\n` +
-      `⚙️ *${config.bot_name}* v${config.version}\n` +
-      `📅 ${new Date().toLocaleString()}\n\n` +
-      `📌 Comandos disponíveis:\n` +
-      `- ${usedPrefix}desligar → Desliga o bot\n` +
-      `- (Adicione mais comandos aqui depois)\n`;
+    const donoMenu = menuAdm(usedPrefix, config.bot_name, message.from);
+    return await message.reply(donoMenu);
 
-    return await message.reply(adminMenu);
   }
 
   if (command === 'crash') {

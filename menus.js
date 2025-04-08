@@ -23,8 +23,6 @@ const menu = (prefix, NomeDoBot, sender) => {
   `;
 };
 
-module.exports = { menu };
-
 const menuAdm = (prefix) => {
   return `🛡 Menu de Administração
 
@@ -44,5 +42,6 @@ ${prefix}statusbot
 };
 
 module.exports = {
-  menuAdm
+  menuAdm,
+  menu
 };
