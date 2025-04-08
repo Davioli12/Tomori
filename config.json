@@ -1,6 +1,10 @@
 {
-  "bot_name": "Tomori",
+  "prefix": "!",
+  "bot_name": "TomoriBot",
   "version": "1.0",
-  "owner": "@Davioli12",
-  "prefix": "!"
+  "owner": "SeuNome",
+  "admins": [
+    "553597567963@c.us",
+    "120363409619544236@g.us"
+  ]
 }

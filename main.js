@@ -4,6 +4,9 @@ const fs = require('fs');
 const mime = require('mime-types');
 const axios = require('axios');
 const { menu } = require('./menus'); // coloque no topo do arquivo junto com os outros requires
+const { isAdmin } = require('./utils');
+const donoConfig = JSON.parse(fs.readFileSync('./dono/settings.json', 'utf-8'));
+
 
 // Carrega configurações
 const config = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
@@ -30,6 +33,8 @@ client.on('message_create', async (message) => {
 
     // Exibe quem enviou
     console.log(`[${message.fromMe ? 'EU' : 'OUTRO'}] ${msg}`);
+    console.log('🔍 ID do usuário:', message.from);
+
 
     // Ignora se não começar com o prefixo
     if (!msg.startsWith(prefix)) return;
@@ -99,9 +104,35 @@ client.on('message_create', async (message) => {
                 console.error(err);
                 await message.reply('❌ Erro ao buscar imagem hentai.');
             }
-        }    
+        }
+        // Comando: desligar
+        if (command === 'desligar') {
+            if (!isAdmin(message.from)) {
+                return await message.reply('🚫 Você não tem permissão para desligar o bot.');
+            }
+        
+            await message.reply('🛑 Desligando o bot...');
+            setTimeout(() => process.exit(0), 1000);
+        }
+        
+        if (command === 'donomenu') {
+            if (!isAdmin(message.from)) {
+                return await message.reply('🚫 Acesso negado.');
+            }
+        
+            const menu = 
+                `🔧 *Menu do Dono/Admin*\n\n` +
+                `⚙️ *${config.bot_name}* v${config.version}\n` +
+                `📅 ${new Date().toLocaleString()}\n\n` +
+                `📌 Comandos disponíveis:\n` +
+                `- ${prefix}desligar → Desliga o bot\n` +
+                `- (Adicione mais comandos aqui depois)\n`;
+        
+            await message.reply(menu);
+        }
+        
+ 
 });
 
 
 client.initialize();
-
