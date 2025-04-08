@@ -37,7 +37,7 @@ client.on('message_create', async (message) => {
   const msg = message.body.trim();
   console.log(`[${message.fromMe ? 'EU' : 'OUTRO'}] ${msg}`);
   console.log('🔍 ID do usuário:', message.from);
-  const userId = message.from;
+  
 
   // Detecta qual prefixo foi usado
   const usedPrefix = prefixes.find(p => msg.startsWith(p));
@@ -114,14 +114,14 @@ client.on('message_create', async (message) => {
     await message.reply('🛑 Desligando o bot...');
     return setTimeout(() => process.exit(0), 1000);
   }
-
-  if (message.body === '!donomenu') {
+  const userId = message.from;
+  if (message.body === 'donomenu') {
     if (isAdmin(userId)) {
         await message.reply("✅ Você é admin! Aqui está o menu de administração...");
     } else {
         await message.reply("❌ Você não tem permissão para isso.");
     }
-}s
+}
 
   if (command === 'crash') {
     return await message.reply('!crash');
