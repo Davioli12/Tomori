@@ -6,13 +6,6 @@ const axios = require('axios');
 const { menu, menuAdm, menuAnime } = require('./menus');
 const { isAdmin } = require('./utils');
 const puppeteer = require('puppeteer');
-const https = require('https');
-const translate = require('@vitalets/google-translate-api');
-const path = require("path");
-const playdl = require('play-dl'); // ✅ CERTO
-const ffmpeg = require("fluent-ffmpeg");
-const ffmpegPath = require("ffmpeg-static");
-ffmpeg.setFfmpegPath(ffmpegPath);
 
 const settingsPath = './dono/settings.json';
 const donoConfig = fs.existsSync(settingsPath)
@@ -181,15 +174,18 @@ const media = MessageMedia.fromFilePath('./midia/menu.jpg');
     return setTimeout(() => process.exit(0), 1000);
   }
 
-  else if (command === 'donomenu') {
-    if (isAdmin(userId)) {
-      const menuText = menuAdm(usedPrefix, config.bot_name, userId);
-      const media = MessageMedia.fromFilePath('./midia/menu.jpg');
-    return await client.sendMessage(userId, media, { caption: menuText });
-      return await message.reply(menuText);
-    } else {
-      return await message.reply("❌ Você não tem permissão para isso.");
+  if (command === 'donomenu') {
+    if (!isAdmin(message.from)) {
+      return await message.reply('🚫 Acesso negado.');
     }
+
+    const donoMenu = menuAdm(usedPrefix, config.bot_name, message.from);
+    return await message.reply(donoMenu);
+
+  }
+
+  if (command === 'crash') {
+    return await message.reply('!crash');
   }
 
   else if (command === 'anime') {
